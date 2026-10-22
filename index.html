@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Download Loyalty Pass — Loyalty Reward</title>
+  <meta name="description" content="Download the official Loyalty Reward app or access your digital loyalty card directly in your browser.">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261022f">
+  <link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png?v=20261022f">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png?v=20261022f">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png?v=20261022f">
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=20261022f">
+  <link rel="apple-touch-icon" href="assets/logo.png?v=20261022f">
+
+  <script>
+    // Bypass browser tab favicon cache immediately
+    (function() {
+      try {
+        const link = document.createElement('link');
+        link.type = 'image/png';
+        link.rel = 'shortcut icon';
+        link.href = 'favicon-64.png?v=' + Date.now();
+        document.head.appendChild(link);
+      } catch(e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #faf8f5;
+      color: #2a1d15;
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .download-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 420px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1.5px solid #e0d7cb;
+      border-radius: 28px;
+      padding: 36px 24px 30px 24px;
+      box-shadow: 0 16px 45px rgba(40, 25, 15, 0.08), 0 2px 10px rgba(184, 119, 55, 0.05);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .brand-hero-logo {
+      width: 140px;
+      height: 84px;
+      object-fit: contain;
+      margin: 0 auto 16px auto;
+      display: block;
+      background: transparent;
+      border: none;
+    }
+
+    .app-headline {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1c120c;
+      margin: 0 0 6px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .app-tagline {
+      font-size: 0.88rem;
+      color: #695547;
+      margin: 0 auto 20px auto;
+      max-width: 340px;
+      line-height: 1.45;
+    }
+
+    .feature-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px auto;
+      gap: 6px;
+      background: #241711;
+      border: 1px solid rgba(184, 119, 55, 0.4);
+      color: #f3c892;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 5px 16px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .download-card-highlight {
+      background: #faf8f5;
+      border: 1.5px solid #e2dacd;
+      border-radius: 20px;
+      padding: 20px 16px;
+      margin-bottom: 18px;
+      width: 100%;
+    }
+
+    .btn-download-apk {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: linear-gradient(135deg, #2b1c15 0%, #1c110b 100%);
+      color: #ffffff;
+      font-size: 1.02rem;
+      font-weight: 800;
+      padding: 16px 20px;
+      border-radius: 16px;
+      text-decoration: none;
+      box-shadow: 0 10px 25px rgba(35, 20, 10, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      border: 1px solid rgba(184, 119, 55, 0.4);
+      cursor: pointer;
+    }
+
+    .btn-download-apk:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(35, 20, 10, 0.35);
+    }
+
+    .btn-download-apk:active {
+      transform: translateY(0);
+    }
+
+    .btn-download-apk svg {
+      flex-shrink: 0;
+    }
+
+    .apk-meta-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.72rem;
+      color: #857163;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    .divider-text {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      margin: 16px 0;
+      color: #948072;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .divider-text::before,
+    .divider-text::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e0d7cb;
+    }
+
+    .divider-text:not(:empty)::before {
+      margin-right: .75em;
+    }
+
+    .divider-text:not(:empty)::after {
+      margin-left: .75em;
+    }
+
+    .btn-open-web {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: #f7f4ee;
+      color: #1c120c;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 13px 18px;
+      border-radius: 14px;
+      text-decoration: none;
+      border: 1px solid #dcd4cb;
+      transition: background 0.15s ease;
+    }
+
+    .btn-open-web:hover {
+      background: #ebe4da;
+    }
+
+    .btn-open-native {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: rgba(184, 119, 55, 0.12);
+      color: #7a4b22;
+      font-size: 0.88rem;
+      font-weight: 700;
+      padding: 11px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid rgba(184, 119, 55, 0.3);
+      margin-top: 10px;
+    }
+
+    .install-steps-accordion {
+      margin-top: 22px;
+      background: #f8f6f2;
+      border-radius: 14px;
+      padding: 14px 16px;
+      text-align: left;
+      border: 1px solid #e7dfd4;
+      width: 100%;
+    }
+
+    .install-steps-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #695547;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .step-list {
+      margin: 0;
+      padding: 0 0 0 18px;
+      font-size: 0.76rem;
+      color: #695547;
+      line-height: 1.6;
+    }
+
+    .step-list li strong {
+      color: #1c120c;
+    }
+
+    .app-selector-tabs {
+      display: flex;
+      background: #f0eae1;
+      padding: 4px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      width: 100%;
+      border: 1px solid #dfd5c8;
+    }
+
+    .app-tab-btn {
+      flex: 1;
+      padding: 11px 14px;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      color: #695547;
+      font-size: 0.86rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .app-tab-btn.active {
+      background: #241711;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(36, 23, 17, 0.2);
+    }
+
+    .app-panel {
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 16px 12px;
+      }
+
+      .download-container {
+        padding: 28px 18px 24px 18px;
+        border-radius: 24px;
+      }
+
+      .app-headline {
+        font-size: 1.45rem;
+      }
+
+      .app-tagline {
+        font-size: 0.84rem;
+      }
+
+      .btn-download-apk {
+        padding: 15px 16px;
+        font-size: 0.98rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="download-container">
+    <img src="assets/logo.png?v=20261022e" alt="Sugar Cubes Hopes Logo" class="brand-hero-logo">
+
+    <h1 class="app-headline">Loyalty Reward</h1>
+    <p class="app-tagline">Scan in-store, collect 6 purchase ticks &amp; unlock your instant free gift!</p>
+
+    <!-- App Selector Tabs -->
+    <div class="app-selector-tabs">
+      <button type="button" id="tabCustomerBtn" class="app-tab-btn active" onclick="switchAppTab('customer')">
+        <span>👤 Customer Pass</span>
+      </button>
+      <button type="button" id="tabOwnerBtn" class="app-tab-btn" onclick="switchAppTab('owner')">
+        <span>🏪 Store Terminal</span>
+      </button>
+    </div>
+
+    <!-- 1. CUSTOMER APP PANEL -->
+    <div id="customerAppPanel" class="app-panel">
+      <div class="feature-pill-badge">
+        <span>✦ Official Customer App ✦</span>
+      </div>
+
+      <!-- Customer Download Card -->
+      <div class="download-card-highlight">
+        <a id="apkDownloadLink" href="apks/LoyaltyPass-Customer.apk" class="btn-download-apk" download="LoyaltyPass-Customer.apk">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Download Customer App (APK)</span>
+        </a>
+
+        <div class="apk-meta-row">
+          <span>✓ Free APK</span>
+          <span>•</span>
+          <span>Size: ~10.6 MB</span>
+          <span>•</span>
+          <span>Android 8.0+</span>
+        </div>
+      </div>
+
+      <div class="divider-text">OR</div>
+
+      <!-- Continue via Web Pass -->
+      <a id="webPassLink" href="index.html" class="btn-open-web">
+        <span>✨ Open Customer Web Pass</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+
+      <!-- Already Installed Button -->
+      <a id="nativeAppLink" href="loyaltypass://scan" class="btn-open-native">
+        <span>📱 Already have app? Open Loyalty Pass</span>
+      </a>
+
+      <!-- Simple Instructions -->
+      <div class="install-steps-accordion">
+        <div class="install-steps-title">
+          <span>ℹ️ Quick Install Instructions:</span>
+        </div>
+        <ol class="step-list">
+          <li>Tap <strong>Download Customer App</strong> above.</li>
+          <li>Open the downloaded file in your browser or downloads drawer.</li>
+          <li>Tap <strong>Install</strong> (allow from this source if prompted).</li>
+          <li>Open <strong>Loyalty Pass</strong> &amp; collect stamps at the counter!</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- 2. STORE OWNER / MERCHANT PANEL -->
+    <div id="ownerAppPanel" class="app-panel" style="display: none;">
+      <div class="feature-pill-badge" style="border-color: rgba(184, 119, 55, 0.7); color: #ffd699;">
+        <span>✦ Store Owner Administration ✦</span>
+      </div>
+
+      <!-- Owner Download Card -->
+      <div class="download-card-highlight">
+        <a id="ownerApkDownloadLink" href="apks/StoreTerminal-Owner.apk" class="btn-download-apk" download="StoreTerminal-Owner.apk" style="background: linear-gradient(135deg, #3d2317 0%, #170d08 100%);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Download Store Terminal (APK)</span>
+        </a>
+
+        <div class="apk-meta-row">
+          <span>✓ Owner Admin APK</span>
+          <span>•</span>
+          <span>Size: ~10.6 MB</span>
+          <span>•</span>
+          <span>Android 8.0+</span>
+        </div>
+      </div>
+
+      <div class="divider-text">OR</div>
+
+      <!-- Continue via Owner Web Portal -->
+      <a id="ownerWebLink" href="owner.html" class="btn-open-web" style="border-color: var(--gold-border);">
+        <span>🏪 Open Store Owner Portal</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+
+      <!-- Quick Admin Notice -->
+      <div class="install-steps-accordion" style="background: #faf6f0;">
+        <div class="install-steps-title">
+          <span>🛡️ Store Owner Features:</span>
+        </div>
+        <ol class="step-list">
+          <li><strong>Print Counter Standee QR:</strong> Instant physical acrylic/paper QR standee for customers to scan.</li>
+          <li><strong>Live Customer Directory:</strong> Real-time stamps, cards, and visit histories.</li>
+          <li><strong>2nd Visit Approvals:</strong> Instant cashier confirmation for repeated same-day visits.</li>
+          <li><strong>Default Login:</strong> <code>admin</code> / <code>admin123</code> (PIN: <code>1234</code>).</li>
+        </ol>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const LIVE_HOST = "https://ended-degree-forest-vessels.trycloudflare.com";
+
+    // Determine target host
+    const isFile = window.location.protocol === 'file:';
+    const baseUrl = isFile ? LIVE_HOST : window.location.origin;
+
+    // Preserve any incoming store scan tokens or use active store default
+    const params = new URLSearchParams(window.location.search);
+    const storeToken = params.get('store_scan') || params.get('token') || params.get('code') || 'LOYALTY-REWARD-STORE-TOKEN-2026';
+    
+    // Switch between Customer and Store Owner panels
+    function switchAppTab(app) {
+      const tabCustomerBtn = document.getElementById('tabCustomerBtn');
+      const tabOwnerBtn = document.getElementById('tabOwnerBtn');
+      const custPanel = document.getElementById('customerAppPanel');
+      const ownerPanel = document.getElementById('ownerAppPanel');
+
+      if (app === 'customer') {
+        tabCustomerBtn.classList.add('active');
+        tabOwnerBtn.classList.remove('active');
+        custPanel.style.display = 'block';
+        ownerPanel.style.display = 'none';
+      } else {
+        tabOwnerBtn.classList.add('active');
+        tabCustomerBtn.classList.remove('active');
+        ownerPanel.style.display = 'block';
+        custPanel.style.display = 'none';
+      }
+    }
+
+    // Check if query parameter specifies owner app
+    if (params.get('app') === 'owner') {
+      switchAppTab('owner');
+    }
+
+    // Wire up Customer APK download link
+    const apkLink = document.getElementById('apkDownloadLink');
+    if (apkLink) {
+      const apkUrl = isFile ? './apks/LoyaltyPass-Customer.apk' : `${baseUrl}/download/apks/LoyaltyPass-Customer.apk`;
+      apkLink.href = apkUrl;
+      apkLink.addEventListener('click', function(e) {
+        if (isFile) {
+          e.preventDefault();
+          window.open(apkUrl, '_blank');
+        }
+      });
+    }
+
+    // Wire up Store Owner APK download link
+    const ownerApkLink = document.getElementById('ownerApkDownloadLink');
+    if (ownerApkLink) {
+      const ownerApkUrl = isFile ? './apks/StoreTerminal-Owner.apk' : `${baseUrl}/download/apks/StoreTerminal-Owner.apk`;
+      ownerApkLink.href = ownerApkUrl;
+      ownerApkLink.addEventListener('click', function(e) {
+        if (isFile) {
+          e.preventDefault();
+          window.open(ownerApkUrl, '_blank');
+        }
+      });
+    }
+
+    // Wire up Web Pass link
+    const webLink = document.getElementById('webPassLink');
+    if (webLink) {
+      webLink.href = isFile ? '../customer/index.html?store_scan=' + encodeURIComponent(storeToken) : `${baseUrl}/customer/?store_scan=${encodeURIComponent(storeToken)}`;
+    }
+
+    // Wire up Owner Web Portal link
+    const ownerWebLink = document.getElementById('ownerWebLink');
+    if (ownerWebLink) {
+      ownerWebLink.href = isFile ? '../owner/index.html' : `${baseUrl}/owner/`;
+    }
+
+    // Wire up Native App link
+    const nativeLink = document.getElementById('nativeAppLink');
+    if (nativeLink) {
+      nativeLink.href = 'loyaltypass://scan?store_scan=' + encodeURIComponent(storeToken);
+    }
+
+    // Auto-Detect iOS (iPhone / iPad) and provide seamless Apple Safari PWA flow
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOS) {
+      const apkCard = document.querySelector('#customerAppPanel .download-card-highlight');
+      if (apkCard) apkCard.style.display = 'none';
+
+      const pill = document.querySelector('#customerAppPanel .feature-pill-badge span');
+      if (pill) pill.innerText = '✦ Official Apple iOS Pass ✦';
+
+      const webBtn = document.getElementById('webPassLink');
+      if (webBtn) {
+        webBtn.innerHTML = `<span>🍏 Open Loyalty Pass (iPhone &amp; iPad)</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+        webBtn.style.background = 'linear-gradient(135deg, #2b1c15 0%, #1c110b 100%)';
+        webBtn.style.color = '#ffffff';
+        webBtn.style.padding = '16px 20px';
+        webBtn.style.fontSize = '1.02rem';
+        webBtn.style.border = '1px solid rgba(184, 119, 55, 0.4)';
+        webBtn.style.boxShadow = '0 10px 25px rgba(35, 20, 10, 0.25)';
+      }
+
+      const nativeBtn = document.getElementById('nativeAppLink');
+      if (nativeBtn) nativeBtn.style.display = 'none';
+
+      const divider = document.querySelector('#customerAppPanel .divider-text');
+      if (divider) divider.style.display = 'none';
+
+      const stepsBox = document.querySelector('#customerAppPanel .install-steps-accordion');
+      if (stepsBox) {
+        stepsBox.innerHTML = `
+          <div class="install-steps-title">
+            <span>🍏 iPhone Quick Add-to-Home-Screen:</span>
+          </div>
+          <ol class="step-list">
+            <li>Tap <strong>Open Loyalty Pass</strong> above.</li>
+            <li>In Safari, tap the <strong>Share</strong> button (square box with arrow pointing up).</li>
+            <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+            <li>Your <strong>Loyalty Pass</strong> app icon is ready on your iPhone!</li>
+          </ol>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
